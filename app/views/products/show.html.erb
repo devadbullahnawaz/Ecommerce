@@ -1,0 +1,58 @@
+<div class='container'>
+
+  <div class='row', style='text-align: center;'>
+
+    <div>
+      <h1><%=@product.name%></h1>
+    <div>
+
+    <div><%(0...@product.images.count).each do |image|%>
+      <%= link_to image_tag(@product.images[image], style: 'width: 300px; height: 230px; margin: 0.5em; object-fit: cover; object-position: top;'), url_for(@product.images[image])%>
+  <%end%></div>
+      <b>About : </b><%=@product.description%>
+    </div>
+    <div>
+      <b>Quantity : </b><%=@product.quantity%>
+    </div>
+    <div>
+      <b>Price : </b><%=@product.price%>
+    </div>
+    <div>
+      <b>Contact : </b><%= get_owner(@product.user_id) %>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+<%if user_signed_in?%>
+  <%if current_user.id == @product.user_id%>
+  <ul>
+    <li><%= link_to 'Edit', edit_user_product_path(current_user.id,@product) %></li>
+    <li><%= link_to 'Destroy', user_product_path(current_user.id,@product),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %></li>
+  </ul>
+  <%else%>
+      <div style='text-align: center;'>
+        <%= form_tag add_to_cart_path(@product.id) do %>
+        <%= number_field_tag :'quantity', class: "form-control"%>
+        <%= submit_tag "add to cart", class: "btn"%></div>
+    <%end%>
+    <%=render 'comments/form', comment: @new_comment%>
+  <%end%>
+  <%else%>
+      <div style='text-align: center;'>
+        <%= form_tag add_to_cart_path(@product.id) do %>
+        <%= number_field_tag :'quantity', class: "form-control"%>
+        <%= submit_tag "add to cart", class: "btn"%></div>
+    <%end%>
+<%end%>
+
+<br>
+<h3> Comments </h3>
+  <% @comments.each do |comment|%>
+  <%= render 'comments/comment', comment: comment%>
+  <%end%>
+<div id='comment_pane'>
+</div>

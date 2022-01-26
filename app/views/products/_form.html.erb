@@ -1,0 +1,41 @@
+<div class="container">
+<h1>Product Info</h1>
+
+<%= form_with model: [current_user, product], local: true do |form| %>
+  <div class="row">
+    <div class="col-25"><%= form.label :name %></div>
+    <div class="col-75 input-class"><%= form.text_field :name %></div>
+
+    <% product.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-25"><%= form.label :description %></div>
+    <div class="col-75 input-class"><%= form.text_area :description %></div>
+  </div>
+  <div class="row">
+    <div class="col-25"><%= form.label :quantity %></div>
+    <div class="col-75 input-class"><%= form.number_field :quantity, in: 0..20000%></div>
+    <% product.errors.full_messages_for(:quantity).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-25"><%= form.label :price, in: 0..20000 %></div>
+    <div class="col-75 input-class"><%= form.number_field :price %></div>
+    <%= form.hidden_field  :user_id, value: current_user.id %><br>
+    <% product.errors.full_messages_for(:price).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div class='field'>
+    <div class="col-25"><%= form.label :images %></div>
+    <div class="col-75 input-class"><%= form.file_field :images, multiple: true, required: true, id: 'files' %></div>
+  </div>
+  <div>
+    <%= form.submit class: "btn"%>
+  </div>
+<%end%>
+    <%= link_to 'Back', root_path %>
+</div>

@@ -1,0 +1,9 @@
+ <%= comment.content %>
+  <%if user_signed_in?%>
+    <%if comment.user_id == current_user.id%>
+      <%= link_to 'Edit', edit_comment_path(comment) %>
+      <%= link_to 'Destroy', comment_path(comment),
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+    <%end%>
+  <%end%><br>

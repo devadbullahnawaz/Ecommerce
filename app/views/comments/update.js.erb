@@ -1,0 +1,1 @@
+$('#form_<%= @comment.id %>').replaceWith(' "<%=j render 'comments/form', post: @post, comment: @comment, remote: true %>"');

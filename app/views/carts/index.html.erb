@@ -1,0 +1,25 @@
+ <b>Shopping Cart</b>
+   <% if session[:cart].empty? %>
+    is empty
+  <%else%>
+    <div class="row justify-content-center">
+    <table class="table-class">
+      <tr>
+        <th>Products</th>
+        <th>Remove</th>
+
+        <th>Sub Total</th>
+      </tr>
+      <% session[:cart].each do |product|%>
+        <tr>
+          <td><b><%=get_product_name(product['product_id'])%></b> with the Quantity : <%=product['quantity']%></td>
+          <td><%=link_to "Remove", remove_from_cart_path(product['product_id']), method: :delete %></td>
+          <td><%= get_price(product['product_id'], product['quantity']) %></td>
+        </tr>
+      <%end%>
+    </table>
+</div>
+Total : <%= cart_total%><br>
+  <%= link_to 'Checkout', set_orders_path, method: :post, class: 'btn btn-success' %>
+  <%end%>
+<br>

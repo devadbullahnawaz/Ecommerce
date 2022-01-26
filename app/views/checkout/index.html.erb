@@ -1,0 +1,26 @@
+Current Order Placed
+
+<table class="table-class">
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+      </tr>
+
+       <% @my_last_order.each do |item| %>
+      <tr>
+          <td><%= get_product_name(item.product_id) %></td>
+          <td><%= item.quantity %></td>
+      </tr>
+ <% end %>
+</table>
+
+<br>
+
+<%if user_signed_in?%>
+    <br>
+    <%= form_tag(apply_coupon_path, method: :post) do %>
+      <%= text_field_tag(:coupon, params[:coupon]) %>
+      <%= submit_tag ('Apply Coupon'), class: 'btn' %>
+    <% end %>
+  <%= button_to 'Pay Via Stripe', checkout_create_path, remote: true, class: 'btn btn-success'%>
+<%end%>

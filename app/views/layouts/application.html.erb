@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ecommerce</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <ul class="navbar-nav">
+   <% if user_signed_in? %> |
+    <%= link_to 'Logout', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %> |
+    <%= link_to 'Edit profile', edit_user_registration_path, class: 'btn btn-success' %> |
+    <%= link_to 'New Product', new_user_product_path(current_user.id), class: 'btn btn-success' %> |
+    <% else %> |
+      <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-primary' %> |
+      <%= link_to 'Login', new_user_session_path, class: 'btn btn-success' %> |
+    <% end %>
+    <%= link_to 'Home', root_path, class: 'btn btn-success' %> |
+    <%= link_to 'View Cart', cart_index_path, class: 'btn btn-success' %>
+  </ul>
+</nav>
+      <p>
+        <% if user_signed_in? %>
+          Logged in as <strong><%= current_user.email %></strong>
+        <% end %>
+      </p>
+</div>
+
+    <div class="container">
+      <% unless notice.nil? %>
+      <p class="alert alert-success"><%= notice %></p>
+      <%end%>
+      <% unless alert.nil? %>
+        <p class='alert alert-danger'><%= alert %></p>
+      <%end%>
+      <%= yield %>
+    </div>
+  </body>
+</html>

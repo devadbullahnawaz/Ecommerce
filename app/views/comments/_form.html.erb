@@ -1,0 +1,11 @@
+<div class='container'>
+  <%= form_with model: comment do |form| %>
+    <div class='row'>
+      <%= form.text_area :content %>
+        <%= form.hidden_field  :user_id, value: current_user.id %><br>
+        <%= form.hidden_field  :product_id, value: @product.id %><br>
+
+        <%= form.submit class: 'btn' %>
+  </div>
+  <%end%>
+</div>

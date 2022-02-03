@@ -29,7 +29,6 @@ class CheckoutController < ApplicationController
   private
 
   def cart_items
-    debugger
     items = []
     my_order_products = ProductOrder.where(order_id: current_user.orders.last.id)
 
